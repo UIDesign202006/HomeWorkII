@@ -1,0 +1,95 @@
+<!-- /**
+* index.html
+* @author Simon
+* @description 
+* @created 2020-06-06T12:03:03.319Z+08:00
+* @copyright None 
+* None
+* @last-modified 2020-06-06T15:48:42.795Z+08:00
+*/ -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart</title>
+</head>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<link rel="stylesheet" href="css/style.css">
+<body>
+    <!-- main app -->
+    <div id="app">
+        <!-- 判断是否为空 -->
+        <div class="cart-full" v-if="list.length">
+            <div class="table">
+                <table>
+                    <!-- 表头 -->
+                    <thead>
+                        <tr>
+                            <th><input id="checkAll" type="checkbox" class="checkAll" @click="checkAllOrNot($event)"></th>
+                            <th>No.</th>
+                            <th>Product</th>
+                            <th>Image</th>
+                            <th>Price</th>
+                            <th>Number</th>
+                            <th>Operation</th>
+                        </tr>
+                    </thead>
+                    <!-- Information -->
+                    <tbody>
+                        <tr v-for="(item, index) in list">
+                            <td>
+                                <input type="checkbox" class="checkItem" @click="checkItem($event, index)">
+                            </td>
+                            <td>
+                                <!-- 序号从 1 开始 -->
+                                {{ index + 1 }}
+                            </td>
+                            <!-- 输出名字 -->
+                            <td>
+                                {{ item.name }}
+                            </td>
+                            <!-- 输出图片 -->
+                            <td>
+                                <img :src="item.img" :alt="item.name">
+                            </td>
+                            <!-- 输出价格 -->
+                            <td>
+                                $ {{ item.price }}
+                            </td>
+                            <!-- Price Line -->
+                            <td>
+                                <button @click="reduceCount(index)" :disabled="item.count === 1"> - </button>
+                                <!-- price -->
+                                {{item.count}}
+                                <button @click="addCount(index)"> + </button>
+                            </td>
+                            <!-- Operation Line -->
+                            <td>
+                                <button @click="remove(index)"> Remove </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="total">
+                    <div class="header">
+                        Total:
+                    </div>
+                    <div class="price">
+                        $ {{totalPrice}}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 如果为空 -->
+        <div class="cart-empty" v-else>
+            <p>There is nothing in the Cart ~</p>
+        </div>
+    </div>
+
+
+    <script src="js/index.js"></script>
+</body>
+</html>
